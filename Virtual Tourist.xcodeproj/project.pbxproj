@@ -12,6 +12,7 @@
 		D555A0F122B5BADB00A38BAE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D555A0EF22B5BADB00A38BAE /* Main.storyboard */; };
 		D555A0F322B5BADF00A38BAE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D555A0F222B5BADF00A38BAE /* Assets.xcassets */; };
 		D555A0F622B5BADF00A38BAE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D555A0F422B5BADF00A38BAE /* LaunchScreen.storyboard */; };
+		D555A0FE22B5E81C00A38BAE /* TravelLocationsMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D555A0FD22B5E81C00A38BAE /* TravelLocationsMapViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		D555A0F222B5BADF00A38BAE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D555A0F522B5BADF00A38BAE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D555A0F722B5BADF00A38BAE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D555A0FD22B5E81C00A38BAE /* TravelLocationsMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TravelLocationsMapViewController.swift; path = ../TravelLocationsMapViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +56,7 @@
 		D555A0EA22B5BADB00A38BAE /* Virtual Tourist */ = {
 			isa = PBXGroup;
 			children = (
+				D555A10122B5E85600A38BAE /* Views */,
 				D555A0EB22B5BADB00A38BAE /* AppDelegate.swift */,
 				D555A0ED22B5BADB00A38BAE /* ViewController.swift */,
 				D555A0EF22B5BADB00A38BAE /* Main.storyboard */,
@@ -62,6 +65,14 @@
 				D555A0F722B5BADF00A38BAE /* Info.plist */,
 			);
 			path = "Virtual Tourist";
+			sourceTree = "<group>";
+		};
+		D555A10122B5E85600A38BAE /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				D555A0FD22B5E81C00A38BAE /* TravelLocationsMapViewController.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -137,6 +148,7 @@
 			files = (
 				D555A0EE22B5BADB00A38BAE /* ViewController.swift in Sources */,
 				D555A0EC22B5BADB00A38BAE /* AppDelegate.swift in Sources */,
+				D555A0FE22B5E81C00A38BAE /* TravelLocationsMapViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
