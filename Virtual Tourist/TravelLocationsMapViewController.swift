@@ -13,6 +13,9 @@ class TravelLocationsMapViewController: UIViewController {
     @IBOutlet weak var travelLocationMap: MKMapView!
     
     override func viewDidLoad() {
+        FlickerAPI.getStudentLocations(latitude: 25.9018, longitude: 45.3623, page: 1) { (sucess, photoURL, error) in
+            
+        }
         super.viewDidLoad()
         travelLocationMap.delegate = self
         // Do any additional setup after loading the view.

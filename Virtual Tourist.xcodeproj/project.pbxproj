@@ -13,6 +13,7 @@
 		D555A0F322B5BADF00A38BAE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D555A0F222B5BADF00A38BAE /* Assets.xcassets */; };
 		D555A0F622B5BADF00A38BAE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D555A0F422B5BADF00A38BAE /* LaunchScreen.storyboard */; };
 		D555A0FE22B5E81C00A38BAE /* TravelLocationsMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D555A0FD22B5E81C00A38BAE /* TravelLocationsMapViewController.swift */; };
+		D59A3EFA22B6E51F003A4EF5 /* FlickerAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D59A3EF922B6E51F003A4EF5 /* FlickerAPI.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		D555A0F522B5BADF00A38BAE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D555A0F722B5BADF00A38BAE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D555A0FD22B5E81C00A38BAE /* TravelLocationsMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TravelLocationsMapViewController.swift; path = ../TravelLocationsMapViewController.swift; sourceTree = "<group>"; };
+		D59A3EF922B6E51F003A4EF5 /* FlickerAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickerAPI.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +58,7 @@
 		D555A0EA22B5BADB00A38BAE /* Virtual Tourist */ = {
 			isa = PBXGroup;
 			children = (
+				D59A3EF822B6E4E9003A4EF5 /* New Group */,
 				D555A10122B5E85600A38BAE /* Views */,
 				D555A0EB22B5BADB00A38BAE /* AppDelegate.swift */,
 				D555A0ED22B5BADB00A38BAE /* ViewController.swift */,
@@ -63,6 +66,7 @@
 				D555A0F222B5BADF00A38BAE /* Assets.xcassets */,
 				D555A0F422B5BADF00A38BAE /* LaunchScreen.storyboard */,
 				D555A0F722B5BADF00A38BAE /* Info.plist */,
+				D59A3EF922B6E51F003A4EF5 /* FlickerAPI.swift */,
 			);
 			path = "Virtual Tourist";
 			sourceTree = "<group>";
@@ -73,6 +77,13 @@
 				D555A0FD22B5E81C00A38BAE /* TravelLocationsMapViewController.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		D59A3EF822B6E4E9003A4EF5 /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "New Group";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -147,6 +158,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D555A0EE22B5BADB00A38BAE /* ViewController.swift in Sources */,
+				D59A3EFA22B6E51F003A4EF5 /* FlickerAPI.swift in Sources */,
 				D555A0EC22B5BADB00A38BAE /* AppDelegate.swift in Sources */,
 				D555A0FE22B5E81C00A38BAE /* TravelLocationsMapViewController.swift in Sources */,
 			);
