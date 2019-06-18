@@ -20,6 +20,25 @@ class TravelLocationsMapViewController: UIViewController ,NSFetchedResultsContro
         travelLocationMap.delegate = self
         setUpfetchedResultController()
         loadAnnotations()
+//        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Annotation")
+//
+//        // Configure Fetch Request
+//        fetchRequest.includesPropertyValues = false
+//
+//        do {
+//            let items = try dataController.viewContext.fetch(fetchRequest) as! [NSManagedObject]
+//            print(items.count)
+//            for item in items {
+//                dataController.viewContext.delete(item)
+//            }
+//
+//            // Save Changes
+//            try dataController.viewContext.save()
+//
+//        } catch {
+//            // Error Handling
+//            // ...
+//        }
     }
     
     func setUpfetchedResultController(){
@@ -41,6 +60,8 @@ class TravelLocationsMapViewController: UIViewController ,NSFetchedResultsContro
         let coord = self.travelLocationMap.convert(tappedLocation, toCoordinateFrom: self.travelLocationMap)
         let mapAnnotation = MKPointAnnotation()
         mapAnnotation.coordinate = coord
+        // Add an annotation if user's press was ended
+        if sender.state == .ended {
         travelLocationMap.addAnnotation(mapAnnotation)
         // Storing create Date and latitude & longitude
         let annotation = Annotation(context: dataController.viewContext)
@@ -49,10 +70,12 @@ class TravelLocationsMapViewController: UIViewController ,NSFetchedResultsContro
         annotation.createDate = Date()
         do {
             try dataController.viewContext.save()
+            print("do")
         } catch {
             fatalError("Unable to save the data")
         }
     }
+}
     
     func loadAnnotations(){
         guard let Annotations = fetchedResultsController.fetchedObjects else { return }
@@ -70,7 +93,26 @@ class TravelLocationsMapViewController: UIViewController ,NSFetchedResultsContro
 // MARK: - MKMapViewDelegate
 extension TravelLocationsMapViewController : MKMapViewDelegate{
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        performSegue(withIdentifier: "ShowCollection", sender: self)
+        let clickedAnnotation = view.annotation
+        let clickedAnnotationLatitude = clickedAnnotation?.coordinate.latitude
+        let clickedAnnotationLongitude = clickedAnnotation?.coordinate.longitude
+        print("hi from map")
+        print(clickedAnnotationLatitude)
+        setUpfetchedResultController()
+        if let annotations = fetchedResultsController.fetchedObjects {
+            print(annotations.count)
+            for annotation in annotations {
+                if annotation.lat == clickedAnnotationLatitude && annotation.long == clickedAnnotationLongitude {
+                    print("waw")
+                    performSegue(withIdentifier: "ShowCollection", sender: annotation)
+                }
+            }
+        }
+    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let controller = segue.destination as! PhotoAlbumViewController
+        controller.annotation = sender as? Annotation
+        controller.dataController = dataController
     }
 }
 
