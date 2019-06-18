@@ -13,7 +13,7 @@ class FlickerAPI {
     struct Prameters {
         static let format = "json"
         static let perPage = 9
-        
+        static let extras = "url_m"
     }
     enum Endpoints {
         static let base = "https://api.flickr.com/services/rest/?method=flickr.photos.search"
@@ -25,7 +25,7 @@ class FlickerAPI {
         var stringValue: String {
             switch self {
             case .fetchCityImages(let lat, let lon , let page):
-                return Endpoints.base + "&api_key=\(APIKey)" + "&lat=\(lat)&lon=\(lon)&page=\(page)&per_page=\(Prameters.perPage)&format=\(Prameters.format)"
+                return Endpoints.base + "&api_key=\(APIKey)" + "&lat=\(lat)&lon=\(lon)&page=\(page)&per_page=\(Prameters.perPage)&extras=\(Prameters.extras)&format=\(Prameters.format)"
 
             }
         }
@@ -36,6 +36,7 @@ class FlickerAPI {
     }
     class func getStudentLocations(latitude: Double, longitude: Double,page:Int,completion: @escaping (Bool,[URL]?,Error?)->()){
         var request = URLRequest(url:FlickerAPI.Endpoints.fetchCityImages(latitude, longitude , page).url)
+        print(request)
         URLSession.shared.dataTask(with: request) { (data, response, error) in
             guard error == nil else {
                 completion(false,nil, error)

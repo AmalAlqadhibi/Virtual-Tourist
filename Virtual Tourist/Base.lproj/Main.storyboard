@@ -50,10 +50,10 @@
             </objects>
             <point key="canvasLocation" x="913.04347826086962" y="24.776785714285712"/>
         </scene>
-        <!--View Controller-->
+        <!--Photo Album View Controller-->
         <scene sceneID="VWp-NY-ICK">
             <objects>
-                <viewController id="z27-QU-Zov" sceneMemberID="viewController">
+                <viewController id="z27-QU-Zov" customClass="PhotoAlbumViewController" customModule="Virtual_Tourist" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="GfP-ce-PXf">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -128,6 +128,10 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="jUo-D1-ygO"/>
                     </view>
+                    <connections>
+                        <outlet property="collectionview" destination="UNQ-1n-dCo" id="4nb-WL-EHx"/>
+                        <outlet property="map" destination="lee-kO-FV5" id="u6q-4C-TQW"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8wq-Ar-sGl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

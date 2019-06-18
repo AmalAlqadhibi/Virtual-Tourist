@@ -12,10 +12,15 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    let dataController = DataController(modelName: "VirtualTouristModel")
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        dataController.load()
+        
+        let navgationController = window?.rootViewController as! UINavigationController
+        let travelLocationsMapVC = navgationController.topViewController as! TravelLocationsMapViewController
+        travelLocationsMapVC.dataController = dataController
         return true
     }
 

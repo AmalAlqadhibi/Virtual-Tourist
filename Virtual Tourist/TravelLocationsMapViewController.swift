@@ -8,46 +8,81 @@
 
 import UIKit
 import MapKit
+import CoreData
 
-class TravelLocationsMapViewController: UIViewController {
+class TravelLocationsMapViewController: UIViewController ,NSFetchedResultsControllerDelegate {
     @IBOutlet weak var travelLocationMap: MKMapView!
+    var dataController:DataController!
+    var fetchedResultsController: NSFetchedResultsController<Annotation>!
     
     override func viewDidLoad() {
-        FlickerAPI.getStudentLocations(latitude: 25.9018, longitude: 45.3623, page: 1) { (sucess, photoURL, error) in
-            
-        }
         super.viewDidLoad()
         travelLocationMap.delegate = self
-        // Do any additional setup after loading the view.
+        setUpfetchedResultController()
+        loadAnnotations()
     }
     
+    func setUpfetchedResultController(){
+        let fetchRequest: NSFetchRequest<Annotation> = Annotation.fetchRequest()
+        let sortDescriptor = NSSortDescriptor(key: "createDate", ascending: false)
+        fetchRequest.sortDescriptors = [sortDescriptor]
+        fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: dataController.viewContext, sectionNameKeyPath: nil, cacheName: nil)
+        fetchedResultsController.delegate = self
+        do{
+            try fetchedResultsController.performFetch()
+        } catch {
+            fatalError("Unable to perform fetch")
+        }
+    }
     
     @IBAction func addPinAtLongPress(_ sender: UILongPressGestureRecognizer) {
         print("HO")
         let tappedLocation = sender.location(in: travelLocationMap)
         let coord = self.travelLocationMap.convert(tappedLocation, toCoordinateFrom: self.travelLocationMap)
-        let annotation = MKPointAnnotation()
-        annotation.coordinate = coord
-        travelLocationMap.addAnnotation(annotation)
-        
+        let mapAnnotation = MKPointAnnotation()
+        mapAnnotation.coordinate = coord
+        travelLocationMap.addAnnotation(mapAnnotation)
+        // Storing create Date and latitude & longitude
+        let annotation = Annotation(context: dataController.viewContext)
+        annotation.lat = mapAnnotation.coordinate.latitude
+        annotation.long = mapAnnotation.coordinate.longitude
+        annotation.createDate = Date()
+        do {
+            try dataController.viewContext.save()
+        } catch {
+            fatalError("Unable to save the data")
+        }
     }
     
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
-     }
-     */
-
-    
+    func loadAnnotations(){
+        guard let Annotations = fetchedResultsController.fetchedObjects else { return }
+        
+        for annotation in Annotations {
+            let lat = annotation.lat
+            let long = annotation.long
+            let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
+            let mapAnnotation = MKPointAnnotation()
+            mapAnnotation.coordinate = coordinate
+            self.travelLocationMap.addAnnotation(mapAnnotation)
+        }
+    }
 }
 // MARK: - MKMapViewDelegate
 extension TravelLocationsMapViewController : MKMapViewDelegate{
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        print("ho")
         performSegue(withIdentifier: "ShowCollection", sender: self)
     }
 }
+
+
+//        FlickerAPI.getStudentLocations(latitude: 24.6968, longitude: 46.7205, page: 2) { (sucess, photoURL, error) in
+//guard error == nil else {
+//
+//    return
+//}
+//if sucess{
+//
+//
+//
+//}
+//}
