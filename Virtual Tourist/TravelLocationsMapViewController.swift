@@ -70,9 +70,8 @@ class TravelLocationsMapViewController: UIViewController ,NSFetchedResultsContro
         annotation.createDate = Date()
         do {
             try dataController.viewContext.save()
-            print("do")
         } catch {
-            fatalError("Unable to save the data")
+            fatalError("unable to save the data")
         }
     }
 }
@@ -96,14 +95,10 @@ extension TravelLocationsMapViewController : MKMapViewDelegate{
         let clickedAnnotation = view.annotation
         let clickedAnnotationLatitude = clickedAnnotation?.coordinate.latitude
         let clickedAnnotationLongitude = clickedAnnotation?.coordinate.longitude
-        print("hi from map")
-        print(clickedAnnotationLatitude)
         setUpfetchedResultController()
         if let annotations = fetchedResultsController.fetchedObjects {
-            print(annotations.count)
             for annotation in annotations {
                 if annotation.lat == clickedAnnotationLatitude && annotation.long == clickedAnnotationLongitude {
-                    print("waw")
                     performSegue(withIdentifier: "ShowCollection", sender: annotation)
                 }
             }
@@ -117,14 +112,3 @@ extension TravelLocationsMapViewController : MKMapViewDelegate{
 }
 
 
-//        FlickerAPI.getStudentLocations(latitude: 24.6968, longitude: 46.7205, page: 2) { (sucess, photoURL, error) in
-//guard error == nil else {
-//
-//    return
-//}
-//if sucess{
-//
-//
-//
-//}
-//}

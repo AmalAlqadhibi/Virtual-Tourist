@@ -68,14 +68,14 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="u9G-S7-zi0">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="photoCollectionViewCell" id="u9G-S7-zi0" customClass="PhotoCollectionViewCell" customModule="Virtual_Tourist" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                                             <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="du1-2y-aEV">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="du1-2y-aEV">
                                                     <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                                                 </imageView>
                                             </subviews>
@@ -86,14 +86,25 @@
                                             <constraint firstItem="du1-2y-aEV" firstAttribute="leading" secondItem="u9G-S7-zi0" secondAttribute="leading" id="KGm-iP-C5l"/>
                                             <constraint firstAttribute="bottom" secondItem="du1-2y-aEV" secondAttribute="bottom" id="cEb-Mk-Lo5"/>
                                         </constraints>
+                                        <connections>
+                                            <outlet property="photoLocation" destination="du1-2y-aEV" id="S8q-Bv-6o6"/>
+                                        </connections>
                                     </collectionViewCell>
                                 </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="z27-QU-Zov" id="Rd7-YA-cNf"/>
+                                    <outlet property="delegate" destination="z27-QU-Zov" id="gIa-OV-HLf"/>
+                                </connections>
                             </collectionView>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TJD-dz-Z3x">
                                 <rect key="frame" x="0.0" y="813" width="414" height="49"/>
                                 <items>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="Ax2-D8-YSI"/>
-                                    <barButtonItem title="New Collection" id="8oD-XB-mhK"/>
+                                    <barButtonItem title="New Collection" id="8oD-XB-mhK">
+                                        <connections>
+                                            <action selector="removeImages:" destination="z27-QU-Zov" id="0NU-Dt-cKu"/>
+                                        </connections>
+                                    </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="q5z-Gy-qXa"/>
                                 </items>
                             </toolbar>
@@ -129,8 +140,10 @@
                         <viewLayoutGuide key="safeArea" id="jUo-D1-ygO"/>
                     </view>
                     <connections>
+                        <outlet property="NoPhotoMess" destination="UF5-uB-fao" id="lTX-eM-2iV"/>
                         <outlet property="collectionview" destination="UNQ-1n-dCo" id="4nb-WL-EHx"/>
                         <outlet property="map" destination="lee-kO-FV5" id="u6q-4C-TQW"/>
+                        <outlet property="newCollectionButton" destination="8oD-XB-mhK" id="UBH-l5-jzf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8wq-Ar-sGl" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -156,4 +169,7 @@
             <point key="canvasLocation" x="2.8985507246376816" y="24.776785714285712"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="placeholder" width="110" height="110"/>
+    </resources>
 </document>

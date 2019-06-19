@@ -14,10 +14,11 @@ class FlickerAPI {
         static let format = "json"
         static let perPage = 9
         static let extras = "url_m"
+        static let noJSONCallBack = "1"
+        
     }
     enum Endpoints {
         static let base = "https://api.flickr.com/services/rest/?method=flickr.photos.search"
-        static let fetchImages = "https://farm{farm-id}.staticflickr.com/{server-id}/{id}_{secret}.jpg"
         
           case fetchCityImages(Double, Double,Int)
 
@@ -25,7 +26,7 @@ class FlickerAPI {
         var stringValue: String {
             switch self {
             case .fetchCityImages(let lat, let lon , let page):
-                return Endpoints.base + "&api_key=\(APIKey)" + "&lat=\(lat)&lon=\(lon)&page=\(page)&per_page=\(Prameters.perPage)&extras=\(Prameters.extras)&format=\(Prameters.format)"
+                return Endpoints.base + "&api_key=\(APIKey)" + "&lat=\(lat)&lon=\(lon)&page=\(page)&per_page=\(Prameters.perPage)&extras=\(Prameters.extras)&nojsoncallback=\(Prameters.noJSONCallBack)&format=\(Prameters.format)"
 
             }
         }
@@ -34,9 +35,8 @@ class FlickerAPI {
             return URL(string: stringValue)!
         }
     }
-    class func getStudentLocations(latitude: Double, longitude: Double,page:Int,completion: @escaping (Bool,[URL]?,Error?)->()){
+    class func getFlickerPhotosURL(latitude: Double, longitude: Double,page:Int,completion: @escaping (Bool,[URL]?,Error?)->()){
         var request = URLRequest(url:FlickerAPI.Endpoints.fetchCityImages(latitude, longitude , page).url)
-        print(request)
         URLSession.shared.dataTask(with: request) { (data, response, error) in
             guard error == nil else {
                 completion(false,nil, error)
@@ -52,7 +52,7 @@ class FlickerAPI {
                 return
             }
             print(String(data: data, encoding: .utf8)!)
-            
+          
             guard let result = try? JSONSerialization.jsonObject(with: data, options: []) as? [String:Any] else {
                 completion(false,nil, error)
                 return
