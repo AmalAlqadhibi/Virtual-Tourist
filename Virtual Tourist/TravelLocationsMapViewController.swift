@@ -44,25 +44,25 @@ class TravelLocationsMapViewController: UIViewController ,NSFetchedResultsContro
         mapAnnotation.coordinate = coord
         // Add an annotation if user's press was ended
         if sender.state == .ended {
-        travelLocationMap.addAnnotation(mapAnnotation)
-        // Storing create Date and latitude & longitude
-        let annotation = Annotation(context: dataController.viewContext)
-        annotation.lat = mapAnnotation.coordinate.latitude
-        annotation.long = mapAnnotation.coordinate.longitude
-        annotation.createDate = Date()
-        do {
-            try dataController.viewContext.save()
-        } catch {
-            fatalError("unable to save the data")
+            travelLocationMap.addAnnotation(mapAnnotation)
+            // Storing create Date and latitude & longitude
+            let annotation = Annotation(context: dataController.viewContext)
+            annotation.lat = mapAnnotation.coordinate.latitude
+            annotation.long = mapAnnotation.coordinate.longitude
+            annotation.createDate = Date()
+            do {
+                try dataController.viewContext.save()
+            } catch {
+                fatalError("unable to save the data")
+            }
         }
     }
-}
     func zoomToLastMapState() {
         if UserDefaults.standard.value(forKey: "mapState") != nil {
-            let lat = UserDefaults.standard.double(forKey: "lastLatitude")
-            let long = UserDefaults.standard.double(forKey: "lastLongitude")
-            let latSpan = UserDefaults.standard.double(forKey: "lastLatitudeSpan")
-            let longSpan = UserDefaults.standard.double(forKey: "lastLongitudeSpan")
+            let lat = UserDefaults.standard.double(forKey: "lastLat")
+            let long = UserDefaults.standard.double(forKey: "lastLong")
+            let latSpan = UserDefaults.standard.double(forKey: "lastLatSpan")
+            let longSpan = UserDefaults.standard.double(forKey: "lastLongSpan")
             let lastCoordsState = CLLocationCoordinate2D(latitude: lat, longitude: long)
             let region = MKCoordinateRegion(center: lastCoordsState, span: MKCoordinateSpan(latitudeDelta: latSpan, longitudeDelta: longSpan))
             travelLocationMap.setRegion(region, animated: true)
@@ -99,17 +99,16 @@ extension TravelLocationsMapViewController : MKMapViewDelegate{
             }
         }
     }
- 
+    
     func mapViewDidChangeVisibleRegion(_ mapView: MKMapView) {
-        let lastLoggedLatitude = mapView.region.center.latitude
-        let lastLoggedLongitude = mapView.region.center.longitude
-        let latitudeSpan = mapView.region.span.latitudeDelta
-        let longitudeSpan = mapView.region.span.longitudeDelta
-        // Storing the area that user zoomed in using user defaults
-        UserDefaults.standard.set(lastLoggedLatitude, forKey: "lastLatitude")
-        UserDefaults.standard.set(lastLoggedLongitude, forKey: "lastLongitude")
-        UserDefaults.standard.set(latitudeSpan, forKey: "lastLatitudeSpan")
-        UserDefaults.standard.set(longitudeSpan, forKey: "lastLongitudeSpan")
+        let lastLat = mapView.region.center.latitude
+        let lastLong = mapView.region.center.longitude
+        let latSpan = mapView.region.span.latitudeDelta
+        let longSpan = mapView.region.span.longitudeDelta
+        UserDefaults.standard.set(lastLat, forKey: "lastLat")
+        UserDefaults.standard.set(lastLong, forKey: "lastLong")
+        UserDefaults.standard.set(latSpan, forKey: "lastLatSpan")
+        UserDefaults.standard.set(longSpan, forKey: "lastLongSpan")
         UserDefaults.standard.synchronize()
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -118,5 +117,3 @@ extension TravelLocationsMapViewController : MKMapViewDelegate{
         controller.dataController = dataController
     }
 }
-
-

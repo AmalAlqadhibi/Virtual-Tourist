@@ -42,30 +42,26 @@ class PhotoAlbumViewController: UIViewController , NSFetchedResultsControllerDel
     func checkIfItFirsTime(){
         setUpUI(isProgressing: true)
         if (fetchedResultsController.fetchedObjects?.count ?? 0) == 0 {
-            print("first time")
             FlickerAPI.getFlickerPhotosURL(latitude: annotation.lat, longitude: annotation.long , page: 1 , completion: handleGetFlickerPhotoResponse(succes:photosURLs:error:))
             isFirstTime = true
         } else {
-            print("secondtime time")
             setUpUI(isProgressing: false)
             self.isFirstTime = false
         }
     }
     func setUpUI(isProgressing:Bool){
-         DispatchQueue.main.async {
-        self.collectionview.isUserInteractionEnabled = !isProgressing
-        if isProgressing {
-        self.activeIndicator.startAnimating()
-        } else{
-            self.activeIndicator.stopAnimating()
+        DispatchQueue.main.async {
+            self.collectionview.isUserInteractionEnabled = !isProgressing
+            if isProgressing {
+                self.activeIndicator.startAnimating()
+            } else{
+                self.activeIndicator.stopAnimating()
             }
         }
     }
     
     func setUpfetchedResultController(){
         let fetchRequest: NSFetchRequest<Photo> = Photo.fetchRequest()
-        let items = try? dataController.viewContext.fetch(fetchRequest) ?? []
-        print(items?.count)
         guard let annotation = annotation else { return }
         let predicate = NSPredicate(format: "annotation == %@", annotation)
         fetchRequest.predicate = predicate
@@ -75,7 +71,6 @@ class PhotoAlbumViewController: UIViewController , NSFetchedResultsControllerDel
         fetchedResultsController.delegate = self
         do{
             try fetchedResultsController.performFetch()
-          //  checkIfItFirsTime()
         } catch {
             fatalError("Unable to perform fetch")
         }
@@ -92,7 +87,7 @@ class PhotoAlbumViewController: UIViewController , NSFetchedResultsControllerDel
         let region = MKCoordinateRegion(center: coords, span: MKCoordinateSpan(latitudeDelta: 0.50, longitudeDelta: 0.50))
         map.setRegion(region, animated: true)
     }
-
+    
     @IBAction func removeImages(_ sender: Any) {
         removeUpdateExistingPhoto()
     }
@@ -107,7 +102,7 @@ class PhotoAlbumViewController: UIViewController , NSFetchedResultsControllerDel
             do {
                 try dataController.viewContext.save()
                 DispatchQueue.main.async {
-                self.collectionview.reloadData()
+                    self.collectionview.reloadData()
                 }
             } catch {
                 print("cannot perform the deletion ")
@@ -123,19 +118,19 @@ class PhotoAlbumViewController: UIViewController , NSFetchedResultsControllerDel
         if isFirstTime {
             return photosURL.count
         } else {
-             return  fetchedResultsController.sections?[section].numberOfObjects ?? 0
+            return  fetchedResultsController.sections?[section].numberOfObjects ?? 0
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "photoCollectionViewCell", for: indexPath) as! PhotoCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "photoCollectionViewCell", for: indexPath) as! PhotoCollectionViewCell
         if isFirstTime {
             cell.photoLocation.dowloadFromServer(url: photosURL[indexPath.row] )
         } else {
-      let photo = self.fetchedResultsController.object(at: indexPath)
-        if let  url = photo.url  {
-       cell.photoLocation.dowloadFromServer(url: url )
-           }
+            let photo = self.fetchedResultsController.object(at: indexPath)
+            if let  url = photo.url  {
+                cell.photoLocation.dowloadFromServer(url: url )
+            }
         }
         return cell
     }
@@ -146,7 +141,7 @@ class PhotoAlbumViewController: UIViewController , NSFetchedResultsControllerDel
             photosURL.remove(at: indexPath.row)
         }
         let photo = self.fetchedResultsController.object(at: indexPath)
-         dataController.viewContext.delete(photo)
+        dataController.viewContext.delete(photo)
         
         do {
             try dataController.viewContext.save()
@@ -166,8 +161,8 @@ class PhotoAlbumViewController: UIViewController , NSFetchedResultsControllerDel
             guard let photosURLs = photosURLs else { return }
             if photosURLs.count == 0 , (fetchedResultsController.fetchedObjects?.count ?? 0) == 0 {
                 DispatchQueue.main.async {
-                self.NoPhotoMess.isHidden = false
-                     }
+                    self.NoPhotoMess.isHidden = false
+                }
             }
             for photoURL in photosURLs {
                 let photo = Photo(context: self.dataController.viewContext)
@@ -179,14 +174,14 @@ class PhotoAlbumViewController: UIViewController , NSFetchedResultsControllerDel
             do {
                 try self.dataController.viewContext.save()
             } catch {
-           print("cannot perform the save")
+                print("cannot perform the save")
             }
             DispatchQueue.main.async {
                 self.setUpUI(isProgressing: false)
                 self.collectionview.reloadData()
             }
-           
+            
         }
     }
-
+    
 }
