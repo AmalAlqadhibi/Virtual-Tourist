@@ -22,7 +22,7 @@
 
 /* Begin PBXFileReference section */
 		D54E0A8322B9A25300462AA0 /* PhotoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewCell.swift; sourceTree = "<group>"; };
-		D54E0A8722B9A75C00462AA0 /* DownloadURLImge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadURLImge.swift; sourceTree = "<group>"; };
+		D54E0A8722B9A75C00462AA0 /* DownloadURLImge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DownloadURLImge.swift; path = ../DownloadURLImge.swift; sourceTree = "<group>"; };
 		D555A0E822B5BADB00A38BAE /* Virtual Tourist.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Virtual Tourist.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D555A0EB22B5BADB00A38BAE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D555A0F022B5BADB00A38BAE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -75,7 +75,6 @@
 				D555A0F422B5BADF00A38BAE /* LaunchScreen.storyboard */,
 				D555A0F722B5BADF00A38BAE /* Info.plist */,
 				D59A3EFC22B84C20003A4EF5 /* VirtualTouristModel.xcdatamodeld */,
-				D54E0A8722B9A75C00462AA0 /* DownloadURLImge.swift */,
 			);
 			path = "Virtual Tourist";
 			sourceTree = "<group>";
@@ -102,6 +101,7 @@
 			isa = PBXGroup;
 			children = (
 				D59A3EF922B6E51F003A4EF5 /* FlickerAPI.swift */,
+				D54E0A8722B9A75C00462AA0 /* DownloadURLImge.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";

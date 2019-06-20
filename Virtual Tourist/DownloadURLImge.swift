@@ -23,8 +23,9 @@ extension UIImageView {
             }
             }.resume()
     }
-    func dowloadFromServer(link: String, contentMode mode: UIView.ContentMode = .scaleAspectFit) {
-        guard let url = URL(string: link) else { return }
+    func dowloadFromServer(link: String, contentMode mode: UIView.ContentMode = .scaleAspectFit)  {
+        guard let url = URL(string: link) else { return  }
         dowloadFromServer(url: url, contentMode: mode)
+       
     }
 }

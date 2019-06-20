@@ -19,26 +19,8 @@ class TravelLocationsMapViewController: UIViewController ,NSFetchedResultsContro
         super.viewDidLoad()
         travelLocationMap.delegate = self
         setUpfetchedResultController()
+        zoomToLastMapState()
         loadAnnotations()
-//        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Annotation")
-//
-//        // Configure Fetch Request
-//        fetchRequest.includesPropertyValues = false
-//
-//        do {
-//            let items = try dataController.viewContext.fetch(fetchRequest) as! [NSManagedObject]
-//            print(items.count)
-//            for item in items {
-//                dataController.viewContext.delete(item)
-//            }
-//
-//            // Save Changes
-//            try dataController.viewContext.save()
-//
-//        } catch {
-//            // Error Handling
-//            // ...
-//        }
     }
     
     func setUpfetchedResultController(){
@@ -75,6 +57,19 @@ class TravelLocationsMapViewController: UIViewController ,NSFetchedResultsContro
         }
     }
 }
+    func zoomToLastMapState() {
+        if UserDefaults.standard.value(forKey: "mapState") != nil {
+            let lat = UserDefaults.standard.double(forKey: "lastLatitude")
+            let long = UserDefaults.standard.double(forKey: "lastLongitude")
+            let latSpan = UserDefaults.standard.double(forKey: "lastLatitudeSpan")
+            let longSpan = UserDefaults.standard.double(forKey: "lastLongitudeSpan")
+            let lastCoordsState = CLLocationCoordinate2D(latitude: lat, longitude: long)
+            let region = MKCoordinateRegion(center: lastCoordsState, span: MKCoordinateSpan(latitudeDelta: latSpan, longitudeDelta: longSpan))
+            travelLocationMap.setRegion(region, animated: true)
+        } else {
+            UserDefaults.standard.setValue(true, forKey: "mapState")
+        }
+    }
     
     func loadAnnotations(){
         guard let Annotations = fetchedResultsController.fetchedObjects else { return }
@@ -103,6 +98,19 @@ extension TravelLocationsMapViewController : MKMapViewDelegate{
                 }
             }
         }
+    }
+ 
+    func mapViewDidChangeVisibleRegion(_ mapView: MKMapView) {
+        let lastLoggedLatitude = mapView.region.center.latitude
+        let lastLoggedLongitude = mapView.region.center.longitude
+        let latitudeSpan = mapView.region.span.latitudeDelta
+        let longitudeSpan = mapView.region.span.longitudeDelta
+        // Storing the area that user zoomed in using user defaults
+        UserDefaults.standard.set(lastLoggedLatitude, forKey: "lastLatitude")
+        UserDefaults.standard.set(lastLoggedLongitude, forKey: "lastLongitude")
+        UserDefaults.standard.set(latitudeSpan, forKey: "lastLatitudeSpan")
+        UserDefaults.standard.set(longitudeSpan, forKey: "lastLongitudeSpan")
+        UserDefaults.standard.synchronize()
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let controller = segue.destination as! PhotoAlbumViewController
